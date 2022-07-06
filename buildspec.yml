@@ -18,7 +18,6 @@ phases:
     commands:
       - TAG=$(date +"%y%d%m%H%M")
       - echo $TAG
-      - systemctl start docker
       - echo Build started on `date`
       - echo Building the Docker image...          
       - docker build -t $IMAGE_REPO_NAME:$TAG .
