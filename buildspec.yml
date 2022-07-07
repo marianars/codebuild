@@ -23,6 +23,7 @@ phases:
       - echo $KEY
       - mkdir latest-model
       - aws s3 cp s3://$BUCKET/$KEY ./latest-model/
+      - ls -lha
       - echo Build started on `date`
       - echo Building the Docker image...          
       - docker build -t $IMAGE_REPO_NAME:$TAG .
