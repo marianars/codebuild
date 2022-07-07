@@ -7,6 +7,7 @@ env:
     AWS_DEFAULT_REGION: "us-east-1"
     AWS_ACCOUNT_ID: "656188653953"
     IMAGE_REPO_NAME: "testcodebuild"
+    BUCKET: "upload-tar-model"
     
 
 phases:
@@ -18,6 +19,10 @@ phases:
     commands:
       - TAG=$(date +"%y%d%m%H%M")
       - echo $TAG
+      - KEY=$(aws s3 ls $BUCKET --recursive | sort | tail -n 1 | awk '{print $4}')
+      - echo $KEY
+      - aws s3 cp s3://$BUCKET/$KEY .
+      - mv $KEY ./latest-model
       - echo Build started on `date`
       - echo Building the Docker image...          
       - docker build -t $IMAGE_REPO_NAME:$TAG .
