@@ -21,8 +21,8 @@ phases:
       - echo $TAG
       - KEY=$(aws s3 ls $BUCKET --recursive | sort | tail -n 1 | awk '{print $4}')
       - echo $KEY
-      - aws s3 cp s3://$BUCKET/$KEY .
-      - mv $KEY ./latest-model
+      - mkdir latest-model
+      - aws s3 cp s3://$BUCKET/$KEY ./latest-model/
       - echo Build started on `date`
       - echo Building the Docker image...          
       - docker build -t $IMAGE_REPO_NAME:$TAG .
